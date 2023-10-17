@@ -1,6 +1,7 @@
 import json
+
 import trio
-from trio_websocket import serve_websocket, ConnectionClosed
+from trio_websocket import ConnectionClosed, serve_websocket
 
 
 async def buses_server(request):
