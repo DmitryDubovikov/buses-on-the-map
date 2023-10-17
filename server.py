@@ -48,11 +48,8 @@ async def listen_to_browser(ws: WebSocketConnection):
 
 async def speak_to_browser(ws: WebSocketConnection):
     while True:
-        try:
-            await send_buses(ws)
-            await trio.sleep(1)
-        except ConnectionClosed:
-            break
+        await trio.sleep(0.1)
+        await send_buses(ws)
 
 
 async def browser_server(request):
