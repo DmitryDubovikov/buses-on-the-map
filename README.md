@@ -68,17 +68,42 @@
 
 Первым шагом установите пакеты:
 
-```python3
+```bash
 pip install -r requirements.txt
 ```
 
 # Как запустить
 
-```python3
+```bash
 python server.py
 ```
 
-```python3
+```bash
 python fake_bus.py
 ```
 
+Вы можете установить значения параметров, передав их как аргументы командной строки при запуске скрипта server.py:
+
+```bash
+python server.py -host your_host_value -browser_port your_browser_port_value -bus_port your_bus_port_value
+```
+Если параметры не указаны явно при запуске, они примут значения по умолчанию:
+
+    host: "127.0.0.1"
+    browser_port: "8000"
+    bus_port: "8080"
+
+Вы можете установить значения параметров, передав их как аргументы командной строки при запуске скрипта fake_bus.py:
+
+```bash
+python fake_bus.py -host your_host_value -port your_port_value -r your_routes_number -b your_buses_per_route -id your_emulator_id -w your_websockets_number
+```
+
+Если параметры не указаны явно при запуске, они примут значения по умолчанию:
+
+    host: "127.0.0.1"
+    port: "8080"
+    routes_number: None
+    buses_per_route: 1
+    emulator_id: "1"
+    websockets_number: 5

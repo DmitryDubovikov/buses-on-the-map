@@ -3,7 +3,6 @@ import logging
 from functools import partial
 
 import configargparse
-import dotenv
 import trio
 from trio_websocket import ConnectionClosed, serve_websocket
 
@@ -128,7 +127,6 @@ listen_browsers_ws = partial(
 
 
 async def main():
-    dotenv.load_dotenv()
     parser = configargparse.ArgParser()
     parser.add(
         "-host",

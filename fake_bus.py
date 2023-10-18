@@ -5,7 +5,6 @@ from itertools import cycle, islice
 from pathlib import Path
 
 import configargparse
-import dotenv
 import trio
 from trio_websocket import ConnectionClosed, HandshakeError, open_websocket_url
 
@@ -81,7 +80,6 @@ async def send_updates(server_address, receive_channel):
 
 
 async def main():
-    dotenv.load_dotenv()
     parser = configargparse.ArgParser()
     parser.add(
         "-host",
