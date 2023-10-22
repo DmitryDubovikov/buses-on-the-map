@@ -77,7 +77,7 @@ async def talk_to_browser(ws, shared_bound):
         await send_buses(ws, shared_bound)
 
 
-async def browser_server(request):
+async def start_browser_server(request):
     ws = await request.accept()
     logger.debug("Open connection on browsers port")
     try:
@@ -96,7 +96,7 @@ async def browser_server(request):
         logger.debug("Close connection on browsers port")
 
 
-async def buses_server(request):
+async def start_buses_server(request):
     ws = await request.accept()
     while True:
         try:
@@ -107,23 +107,6 @@ async def buses_server(request):
             await ws.send_message("OK")
         except ConnectionClosed:
             break
-
-
-listen_buses_coord_ws = partial(
-    serve_websocket,
-    buses_server,
-    HOST,
-    LISTEN_BUSES_PORT,
-    ssl_context=None,
-)
-
-listen_browsers_ws = partial(
-    serve_websocket,
-    browser_server,
-    HOST,
-    LISTEN_BROWSERS_PORT,
-    ssl_context=None,
-)
 
 
 async def main():
@@ -160,8 +143,20 @@ async def main():
 
     logger.debug(options)
     async with trio.open_nursery() as nursery:
-        nursery.start_soon(listen_buses_coord_ws)
-        nursery.start_soon(listen_browsers_ws)
+        nursery.start_soon(
+            serve_websocket,
+            start_buses_server,
+            HOST,
+            LISTEN_BUSES_PORT,
+            None,
+        )
+        nursery.start_soon(
+            serve_websocket,
+            start_browser_server,
+            HOST,
+            LISTEN_BROWSERS_PORT,
+            None,
+        )
 
 
 if __name__ == "__main__":
